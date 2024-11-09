@@ -31,7 +31,18 @@ pipeline {
                 '''
             }
         }
-       
+       stage('Deploy to Heroku') {
+            environment {
+                // Use the Heroku API key if needed for CLI authentication
+                HEROKU_API_KEY = credentials('heroku-api-key')
+            }
+            steps {
+                // Run the deployment using SSH and ensure the build folder is pushed if necessary
+                sh '''
+                git push heroku main
+                '''
+            }
+        }
         
     }
 }
