@@ -1,33 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    // Runs the build process
-                    sh 'echo "Build started"'
-                    sh 'npm install' // Installs all project dependencies
-                    sh 'npm run build' // Builds your React app and prepares it for deployment
-                    sh 'echo "Build completed"'
-                }
+                sh 'npm install'
+            }
+        }
+        stage('Build React App') {
+            steps {
+                sh 'npm run build'
             }
         }
         stage('Deploy to Heroku') {
             environment {
-                HEROKU_API_KEY = credentials('heroku-api-key') // Loads Heroku API key as an environment variable
+                HEROKU_API_KEY = credentials('heroku-api-key') // Add API key in Jenkins credentials
             }
             steps {
-                script {
-                    // Commands to deploy the app to Heroku
-                    sh 'echo "Deploying to Heroku"'
-                    sh '''
-                    git init
-                    git add -A
-                    git commit -m "Deploy from Jenkins"
-                    heroku git:remote -a reactapp-spp
-                    git push -f heroku main
-                    '''
-                }
+                sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'
+                sh 'git push heroku main'
             }
         }
     }
