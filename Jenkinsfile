@@ -21,6 +21,16 @@ pipeline {
                 sh 'npm run build'
             }
         }
+
+        stage('Deploy to Heroku') {
+            environment {
+                HEROKU_API_KEY = credentials('heroku-api-key')
+            }
+            steps {
+                sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'
+                sh 'git push heroku main'
+            }
+        }
        
         
     }
