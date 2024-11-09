@@ -21,6 +21,6 @@ function App() {
     </div>
   );
 }
-// for new commit noting else new
+// for new commit noting else new 1
 
 export default App;
