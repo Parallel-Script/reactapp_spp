@@ -38,17 +38,7 @@ pipeline {
                 HEROKU_API_KEY = credentials('heroku-api-key')
             }
             steps {
-                // Run the deployment using SSH and ensure the build folder is pushed if necessary
-                sh '''
-                # Ensure the Heroku CLI is authenticated if using API key
-                if [ -n "$HEROKU_API_KEY" ]; then
-                    echo "$HEROKU_API_KEY" | heroku auth:token --stdin
-                fi
-                
-                # Push to Heroku using SSH
-                git push heroku main
-                '''
-            }
+            sh 'git push heroku main'
         }
        
         
