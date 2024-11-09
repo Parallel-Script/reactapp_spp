@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Deploy to Heroku') {
             environment {
-                HEROKU_API_KEY = credentials(herokusshkey) // Loads Heroku API key as an environment variable
+                HEROKU_API_KEY = credentials('heroku-api-key') // Loads Heroku API key as an environment variable
             }
             steps {
                 script {
@@ -24,7 +24,7 @@ pipeline {
                     git init
                     git add -A
                     git commit -m "Deploy from Jenkins"
-                    heroku git:remote -a reactapp-app
+                    heroku git:remote -a reactapp-spp
                     git push -f heroku main
                     '''
                 }
