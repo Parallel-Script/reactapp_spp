@@ -22,13 +22,29 @@ pipeline {
             }
         }
 
+        environment {
+        HEROKU_API_KEY = credentials('heroku-api-key') // Use your Jenkins credentials ID for Heroku API key
+    }
+
+    stages {
+        stage('Test SSH to Heroku') {
+            steps {
+                script {
+                    sshagent(['heroku-ssh-key']) {
+                        sh 'ssh -T git@heroku.com'
+                    }
+                }
+            }
+        }
+
         stage('Deploy to Heroku') {
             steps {
                 script {
-                    // Navigate to the specified directory
-                    dir('/var/lib/jenkins/workspace/spp10pipeline') {
-                        // Run the git push to Heroku command
-                        sh 'git push heroku main'
+                    sshagent(['heroku-ssh-key']) {
+                        dir('/var/lib/jenkins/workspace/spp10pipeline') {
+                            sh 'git remote set-url heroku git@heroku.com:YourHerokuAppName.git'
+                            sh 'git push heroku main'
+                        }
                     }
                 }
             }
