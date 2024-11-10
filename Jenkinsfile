@@ -4,7 +4,7 @@ pipeline {
         nodejs 'nodejs'
     }
     environment {
-        HEROKU_API_KEY = credentials('heroku-api-key') // Use your Jenkins credentials ID for Heroku API key
+        HEROKU_API_KEY = credentials('heroku-api-keyp') // Use your Jenkins credentials ID for Heroku API key
     }
     stages {
         stage('Git Checkout') {
@@ -28,7 +28,7 @@ pipeline {
         stage('Test SSH to Heroku') {
             steps {
                 script {
-                    sshagent(['heroku-ssh-key']) {
+                    sshagent(['heroku-ssh-keyp']) {
                         sh 'ssh -T git@heroku.com'
                     }
                 }
@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy to Heroku') {
             steps {
                 script {
-                    sshagent(['heroku-ssh-key']) {
+                    sshagent(['heroku-ssh-keyp']) {
                         dir('/var/lib/jenkins/workspace/spp10pipeline') {
                             sh 'git remote set-url heroku git@heroku.com:YourHerokuAppName.git'
                             sh 'git push heroku main'
