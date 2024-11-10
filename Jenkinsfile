@@ -24,11 +24,11 @@ pipeline {
 
         stage('Login to Heroku') {
             environment {
-                HEROKU_API_KEY = credentials('heroku-api-key')  // Ensure this is stored as Jenkins credentials
+                HEROKU_API_KEY = credentials('heroku-api-key')  // Make sure this is the correct credentials ID
             }
             steps {
                 script {
-                    // Use the API key to log in to Heroku
+                    // Make sure the API key is properly set
                     sh 'echo $HEROKU_API_KEY | heroku auth:token'
                 }
             }
