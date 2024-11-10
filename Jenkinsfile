@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         HEROKU_USERNAME = 'veeruved186@gmail.com'  // Replace with your Heroku username
-        HEROKU_API_KEY = 'HRKU-7f8a55e4-d16a-44b4-8bfc-5d6d3c95987b'   // Replace with your Heroku API key
+        HEROKU_API_KEY = ''   // Replace with your Heroku API key
     }
     stages {
         stage('Git Checkout') {
