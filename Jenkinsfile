@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'nodejs'
     }
+    environment {
+        HEROKU_API_KEY = credentials('heroku-api-key') // Use your Jenkins credentials ID for Heroku API key
+    }
     stages {
         stage('Git Checkout') {
             steps {
@@ -22,11 +25,6 @@ pipeline {
             }
         }
 
-        environment {
-        HEROKU_API_KEY = credentials('heroku-api-key') // Use your Jenkins credentials ID for Heroku API key
-    }
-
-    stages {
         stage('Test SSH to Heroku') {
             steps {
                 script {
