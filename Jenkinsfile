@@ -34,12 +34,6 @@ pipeline {
             }
         }
 
-        stage('Set Heroku Remote') {
-            steps {
-                sh 'git remote remove heroku || true'
-                sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'
-            }
-        }
 
         stage('Deploy to Heroku') {
             steps {
