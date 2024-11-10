@@ -26,17 +26,29 @@ pipeline {
         }
 
 
-        stage('Deploy to Heroku') {
+        stages {
+        stage('Clone Repository') {
             steps {
                 script {
-                    sshagent(['heroku-ssh-keyp']) {
-                        dir('/var/lib/jenkins/workspace/spp10pipeline') {
-                            sh 'git remote set-url heroku git@heroku.com:reactapp-spp.git'
-                            sh 'git push heroku main'
-                        }
+                    // If you need to pull the latest code, make sure to run git commands in the project directory
+                    dir('/react_app/reactapp_spp') {
+                        sh 'git pull origin main'  // Pull latest changes from GitHub (or your Git repository)
                     }
                 }
             }
+        }
+
+        stage('Push to Heroku') {
+            steps {
+                script {
+                    // Navigate to your project directory and push to Heroku
+                    dir('/react_app/reactapp_spp') {
+                        sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'  // Add Heroku remote if not already added
+                        sh 'git push heroku main'  // Push to Heroku's main branch
+                    }
+                }
+            }
+        }
         }
     }
 }
