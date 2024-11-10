@@ -22,38 +22,15 @@ pipeline {
             }
         }
 
-        stage('Navigate to Workspace') {
+        stage('Heroku Login and Push') {
             steps {
                 script {
-                    sh 'cd /var/lib/jenkins/workspace/spp10pipeline'
+                    // Run the script to log in and push to Heroku
+                    sh '/var/lib/jenkins/workspace/spp10pipeline/heroku_login_push.sh'
                 }
             }
         }
-        stage('Login to Heroku') {
-            steps {
-                script {
-                    sh '''
-                    echo "Logging into Heroku"
-                    echo "veeruved186@gmail.com" | heroku login -i
-                    # Simulate password input (not secure, use environment variables for real cases)
-                    expect << EOF
-                    spawn heroku login -i
-                    expect "Email:"
-                    send "veeruved186@gmail.com\\r"
-                    expect "Password:"
-                    send "HRKU-7f8a55e4-d16a-44b4-8bfc-5d6d3c95987b\\r"
-                    EOF
-                    '''
-                }
-            }
-        }
-        stage('Push to Heroku') {
-            steps {
-                script {
-                    sh 'git push heroku'
-                }
-            }
-        }
+        
     }
 
     post {
