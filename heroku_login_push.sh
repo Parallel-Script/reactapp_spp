@@ -9,7 +9,7 @@ spawn heroku login -i
 expect "Email:"
 send "veeruved186@gmail.com\r"
 expect "Password:"
-send "HRKU-7f8a55e4-d16a-44b4-8bfc-5d6d3c95987b\r"
+send "pass\r"
 expect eof
 EOF
 
