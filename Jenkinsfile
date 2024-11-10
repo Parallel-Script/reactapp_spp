@@ -32,15 +32,17 @@ pipeline {
             }
         }
        stage('Deploy to Heroku') {
-            environment {
-                // Use the Heroku API key if needed for CLI authentication
-                HEROKU_API_KEY = credentials('heroku-api-key')
+        environment {
+            // Fetching Heroku API key from Jenkins credentials
+            HEROKU_API_KEY = credentials('heroku-api-key')  
             }
-            steps {
-                // Run the deployment using SSH and ensure the build folder is pushed if necessary
-                sh '''
-                git push heroku main
-                '''
+        steps {
+            script {
+                // Setting Heroku remote URL with the API key for authentication
+                sh 'git remote set-url heroku https://$HEROKU_API_KEY@git.heroku.com/reactapp-spp.git'
+                // Pushing to Heroku
+                sh 'git push heroku main'
+                }
             }
         }
         
