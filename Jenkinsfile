@@ -23,8 +23,14 @@ pipeline {
         }
 
         stage('Deploy to Heroku') {
-        steps {
-                sh 'git push heroku main'    
+            steps {
+                script {
+                    // Navigate to the specified directory
+                    dir('/var/lib/jenkins/workspace/spp10pipeline') {
+                        // Run the git push to Heroku command
+                        sh 'git push heroku master'
+                    }
+                }
             }
         }
     }
