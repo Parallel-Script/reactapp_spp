@@ -36,15 +36,20 @@ pipeline {
             // Fetching Heroku API key from Jenkins credentials
             HEROKU_API_KEY = credentials('heroku-api-key')  
             }
-        steps {
-            script {
-                // Setting Heroku remote URL with the API key for authentication
-                sh 'git remote set-url heroku https://$HEROKU_API_KEY@git.heroku.com/reactapp-spp.git'
-                // Pushing to Heroku
-                sh 'git push heroku main'
+       }
+        stage('heroku deploy gemini') {
+            steps {
+                script {
+                    // Securely use Heroku API token
+                    withCredentials([usernamePassword(credentialsId: 'heroku-email-password')]) {
+                        sh 'heroku login --token ${CREDENTIALS_API_KEY}'
+                        sh 'heroku container:login'
+                        sh 'heroku container:push web'
+                        sh 'heroku container:release web'
+                    }
                 }
             }
         }
         
-    }
+    
 }
