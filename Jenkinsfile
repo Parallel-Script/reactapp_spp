@@ -1,10 +1,10 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs'
+        nodejs 'nodejs'  // Use the correct Node.js tool name as configured in Jenkins
     }
     environment {
-        HEROKU_API_KEY = credentials('heroku-api-key') // Use your Jenkins credentials ID for Heroku API key
+        HEROKU_API_KEY = credentials('heroku-api-key')  // Use your Jenkins credentials ID for Heroku API key
     }
     stages {
         stage('Git Checkout') {
@@ -25,13 +25,11 @@ pipeline {
             }
         }
 
-
-        stages {
         stage('Clone Repository') {
             steps {
                 script {
                     // If you need to pull the latest code, make sure to run git commands in the project directory
-                    dir('/react_app/reactapp_spp') {
+                    dir('./reactapp_spp') {  // Ensure the directory is relative to the workspace
                         sh 'git pull origin main'  // Pull latest changes from GitHub (or your Git repository)
                     }
                 }
@@ -42,13 +40,12 @@ pipeline {
             steps {
                 script {
                     // Navigate to your project directory and push to Heroku
-                    dir('/react_app/reactapp_spp') {
+                    dir('./reactapp_spp') {  // Ensure the directory is relative to the workspace
                         sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'  // Add Heroku remote if not already added
                         sh 'git push heroku main'  // Push to Heroku's main branch
                     }
                 }
             }
-        }
         }
     }
 }
