@@ -37,7 +37,28 @@ pipeline {
 
         stage('Deploy to Heroku') {
             steps {
-                sh 'git push heroku main'
+                script{
+                
+                    withCredentials([usernamePassword(credentialsId: 'heroku-email-password', usernameVariable: 'HEROKU_EMAIL', passwordVariable: 'HEROKU_PASSWORD')]) {
+                    // These variables will now hold the Heroku email and password
+                    // You can now use these variables in the next steps to authenticate with Heroku
+
+                    // Add the Heroku Git remote using the app name
+                    sh "git remote add heroku https://git.heroku.com/${HEROKU_APP_NAME}.git"
+    
+                    // Store credentials for Git usage
+                    sh """
+                    git config --global credential.helper 'store'
+                    echo "https://${HEROKU_EMAIL}:${HEROKU_PASSWORD}@git.heroku.com" > ~/.git-credentials
+                        """
+    
+                    // Push code to Heroku
+                    sh 'git push heroku main'
+                }
+
+
+                }
+                
             }
         }
     }
