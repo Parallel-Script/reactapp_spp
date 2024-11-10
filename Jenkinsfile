@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        HEROKU_API_KEY = credentials('heroku-api-key')
-        HEROKU_APP_NAME = 'reactapp-spp'
-    }
+    
 
     stages {
         stage('Checkout Code') {
