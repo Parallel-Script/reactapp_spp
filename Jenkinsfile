@@ -41,7 +41,7 @@ pipeline {
                 script {
                     // Navigate to your project directory and push to Heroku
                     dir('./reactapp_spp') {  // Ensure the directory is relative to the workspace
-                        sh 'git remote add heroku https://git.heroku.com/reactapp-spp.git'  // Add Heroku remote if not already added
+                          // Add Heroku remote if not already added
                         sh 'git push heroku main'  // Push to Heroku's main branch
                     }
                 }
