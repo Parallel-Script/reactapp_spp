@@ -28,7 +28,7 @@ pipeline {
                     // Navigate to the specified directory
                     dir('/var/lib/jenkins/workspace/spp10pipeline') {
                         // Run the git push to Heroku command
-                        sh 'git push heroku master'
+                        sh 'git push heroku main'
                     }
                 }
             }
