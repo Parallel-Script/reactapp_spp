@@ -41,10 +41,8 @@ pipeline {
                 script {
                     dir('./reactapp_spp') {
                         // Add Heroku remote with username and API key as password for authentication
-                        sh """
-                        heroku git:remote -a reactapp-spp
-                        git push heroku main
-                        """
+                        sh 'git push heroku main'
+                        
                     }
                 }
             }
