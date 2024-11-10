@@ -37,10 +37,10 @@ pipeline {
                 script {
                     sh '''
                     echo "Logging into Heroku"
-                    echo "veeruved186@gmail.com" | heroku login
+                    echo "veeruved186@gmail.com" | heroku login -i
                     # Simulate password input (not secure, use environment variables for real cases)
                     expect << EOF
-                    spawn heroku login
+                    spawn heroku login -i
                     expect "Email:"
                     send "veeruved186@gmail.com\\r"
                     expect "Password:"
