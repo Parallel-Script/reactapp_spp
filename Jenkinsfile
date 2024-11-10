@@ -36,7 +36,7 @@ pipeline {
         stage('Deploy to Heroku') {
         steps {
             script {
-                withCredentials([usernamePassword(credentialsId: 'heroku-credentials')]) {
+                withCredentials([usernamePassword(credentialsId: 'heroku-email-password')]) {
                     sh 'heroku login --token ${CREDENTIALS_API_KEY}'
                     sh 'git push heroku main'
                     }
