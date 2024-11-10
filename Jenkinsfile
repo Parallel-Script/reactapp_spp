@@ -25,18 +25,35 @@ pipeline {
             }
         }
 
-        stage('Deploy to Heroku') {
+        stage('Navigate to Workspace') {
             steps {
                 script {
-                    // Skip installation and directly use Heroku CLI commands
+                    sh 'cd /var/lib/jenkins/workspace/spp10pipeline'
+                }
+            }
+        }
+        stage('Login to Heroku') {
+            steps {
+                script {
                     sh '''
-                    echo "$HEROKU_API_KEY" | heroku auth:token
-                    heroku git:remote -a $HEROKU_APP_NAME
-                    git init
-                    git add .
-                    git commit -m "Deploy via Jenkins"
-                    git push -f heroku `git rev-parse --abbrev-ref HEAD`:main
+                    echo "Logging into Heroku"
+                    echo "veeruved186@gmail.com" | heroku login
+                    # Simulate password input (not secure, use environment variables for real cases)
+                    expect << EOF
+                    spawn heroku login
+                    expect "Email:"
+                    send "veeruved186@gmail.com\\r"
+                    expect "Password:"
+                    send "HRKU-7f8a55e4-d16a-44b4-8bfc-5d6d3c95987b\\r"
+                    EOF
                     '''
+                }
+            }
+        }
+        stage('Push to Heroku') {
+            steps {
+                script {
+                    sh 'git push heroku'
                 }
             }
         }
