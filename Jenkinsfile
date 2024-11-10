@@ -32,7 +32,7 @@ pipeline {
         stage('Heroku Login and Push') {
             steps {
                 script {
-                    // Run the script
+                    // Run the script 1
                     sh '/var/lib/jenkins/workspace/spp10pipeline/heroku_login_push.sh'
                 }
             }
