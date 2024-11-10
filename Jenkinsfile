@@ -22,17 +22,6 @@ pipeline {
             }
         }
 
-        stage('Login to Heroku') {
-            environment {
-                HEROKU_API_KEY = credentials('heroku-api-key')  // Make sure this is the correct credentials ID
-            }
-            steps {
-                script {
-                    // Make sure the API key is properly set
-                    sh 'echo $HEROKU_API_KEY | heroku auth:token'
-                }
-            }
-        }
         stage('Deploy to Heroku') {
         steps {
                 sh 'git push heroku main'    
