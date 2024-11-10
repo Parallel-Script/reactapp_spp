@@ -5,7 +5,7 @@ cd /var/lib/jenkins/workspace/spp10pipeline
 
 # Login to Heroku using expect
 /usr/bin/expect <<EOF
-spawn heroku login
+spawn heroku login -i
 expect "Email:"
 send "veeruved186@gmail.com\r"
 expect "Password:"
